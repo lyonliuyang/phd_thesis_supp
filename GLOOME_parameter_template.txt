@@ -1,0 +1,49 @@
+_seqFile /PATH/TO/MATRIX.aln # gene presence/absence matrix alignment in fasta format
+_treeFile /PATH/TO/STRAIN_TREE.nwk # nwk tree format 
+##### Model parameters
+## if all-zeros positions are missing from the data
+_accountForMissingData 1
+_minNumOfOnes 1 # e.g., for COG and EggNOG only patterns with 3 or more are observable
+_minNumOfZeros 0 # e.g., for indels, there is no position with only 1s => minNumOfZeros=1
+#### Mixture model (gain and loss rates distributions are independent)
+_gainLossDist 1 # if 1, independent distribution for gain rate and loss rate
+_isRootFreqEQstationary 1 # if 0 it will Allow root frequencies to differ from stationary ones
+#### distribution type for gain rate, loss rate
+_gainDistributionType GENERAL_GAMMA_PLUS_INV
+#_gainDistributionType GENERAL_GAMMA
+_lossDistributionType GENERAL_GAMMA_PLUS_INV
+#_lossDistributionType GENERAL_GAMMA
+
+#### distribution type for overall rate, relevant only for non-mixture model. i.e., overall rate for gain and loss
+_rateDistributionType GENERAL_GAMMA_PLUS_INV 
+# general distribution, PLUS_INV = invariant category
+##### optimizations
+_performOptimizations 1
+_performOptimizationsBBL 1 # MLE optimize all branch lengths
+_isMultipleAllBranchesByFactorAtStart 1 # MLE-based branch-proportion
+_performOptimizationsManyStarts 0 # multiple starting points for optimization
+## Generic "knob" to set the optimization level - tradeoff for running time and parameter estimation accuracy
+## Options = [VVVlow,VVlow, Vlow, low, mid, high, Vhigh]
+_optimizationLevel mid
+##### number of categories in Gamma distribution
+## Categories for the gain/loss mixture model.
+# Model Running time is proportional to _numberOfLossCategories x _numberOfGainCategories
+## If GENERAL_GAMMA_PLUS_INV is selected, an additional invariant rate category is used
+_numberOfLossCategories 4
+_numberOfGainCategories 4
+## Categories for the overall rate, relevant only for non-mixture model
+_numberOfRateCategories 4
+##### relevant when no estimation/optimization is done
+#_userGainLossRatio 1
+#_userAlphaGain 1.0
+#_userBetaGain 1.0
+#_userProbInvariantGain 0.05
+#_userAlphaLoss 1.0
+#_userBetaLoss 1.0  
+#_userProbInvariantLoss 0.05
+#_userProbInvariantRate 0.1
+#_userAlphaRate 0.6
+#_userBetaRate 1.0
+#_userGain 0.7
+#_userLoss 4.5
+#_userTheta 0.88
